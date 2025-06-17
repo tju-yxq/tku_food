@@ -1,0 +1,25 @@
+# yxq/houtai-front/.gitignore
+
+# 依赖
+node_modules/
+
+# 构建产物
+dist/
+*.js.map
+
+# 日志
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 编辑器和系统配置
+.idea/
+.vscode/
+*.suo
+*.user
+*.log
+.DS_Store
+
+# 环境变量文件 (不应将包含敏感信息的环境变量提交到仓库)
+.env.local
+.env.*.local

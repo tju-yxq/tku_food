@@ -1,0 +1,12 @@
+# yxq/back/.dockerignore
+
+# 忽略Git目录
+.git
+.gitignore
+
+# 忽略Maven构建产物
+target/
+
+# 忽略IDE和系统文件
+.idea/
+.vscode/

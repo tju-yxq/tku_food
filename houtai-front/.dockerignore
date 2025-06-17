@@ -1,0 +1,14 @@
+# yxq/houtai-front/.dockerignore
+
+# 忽略Git目录
+.git
+.gitignore
+.idea
+
+# 忽略依赖目录，因为我们将在Dockerfile中重新安装
+node_modules/
+
+# 忽略日志和本地配置文件
+npm-debug.log*
+.env.local
+.env.*.local

@@ -1,0 +1,106 @@
+# 服务器相关配置
+server:
+  port: 8090
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+
+# Spring Boot 应用配置
+spring:
+  # 数据源配置 (SQL Server)
+  datasource:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://localhost:1433;databaseName=tju_food7;encrypt=true;trustServerCertificate=true;
+    username: Yu_Xinqiang
+    password: 20050413yu
+
+  # 邮箱发送配置 (QQ邮箱)
+  mail:
+    host: smtp.qq.com
+    port: 587
+    username: 2651701064@qq.com
+    password: fowvlpgoclimdjdd
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
+  # Redis 配置 (已采纳新的配置项路径)
+  data:
+    redis:
+      # 数据库索引，默认为0
+      database: 0
+      # 连接到虚拟机中的Redis
+      host: 192.168.92.128
+      # Redis默认端口
+      port: 6379
+      # Redis服务本身没有设置密码，此行已注释。
+      # password:
+      # 连接超时时间
+      timeout: 5000ms
+
+# MyBatis 配置
+mybatis:
+  # (关键) 指定 Mapper XML 文件的位置
+  mapper-locations: classpath*:mapper/*.xml
+  # (推荐) 为实体类起别名，方便在XML中使用
+  type-aliases-package: xyz.tjucomments.tjufood.entity
+  # (推荐) 开启驼峰命名自动转换（例如，数据库的 user_name 字段会自动映射到 Java 的 userName 属性）
+  configuration:
+    map-underscore-to-camel-case: true
+
+# SpringDoc API 文档配置 (使用默认路径以确保与Knife4j兼容)
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    tags-sorter: alpha
+    operations-sorter: alpha
+
+# ======================================================
+# 【推荐】使用以下完整的Knife4j配置块
+# ======================================================
+knife4j:
+  # 开启增强功能
+  enable: true
+  # 设置语言为中文
+  locale: zh_CN
+  # 个性化设置
+  setting:
+    # 开启顶栏的“文档管理”功能
+    enableDocumentManage: true
+    # 开启接口过滤
+    enableSwaggerModels: true
+    # 开启页脚
+    enableFooter: true
+    # 【新增】自定义页脚内容, 支持HTML
+    footerCustomContent: "TjuFood 项目组 &copy; 2024-2025 All Rights Reserved. <a href='https://tju.edu.cn' target='_blank'>天津大学官网</a>"
+    # 【新增】引入自定义CSS文件以修改Logo
+    customCss: /css/custom.css
+    # 【新增】开启自定义排序
+    enableCustomSort: true
+
+  # 文档信息配置
+  information:
+    title: "TjuFood - 天津大学美食点评平台 API文档"
+    description: "为TjuFood项目后台管理系统提供在线API测试与文档服务。"
+    version: "v1.2.0"
+    # 您之前的联系人信息等也可以放在这里
+    contact:
+      name: "喻新强"
+      email: "3023209091@tju.edu.cn"
+      url: "https://gitee.com/zjn79/TJUcomments"
+
+
+# 项目自定义配置
+tjufood:
+  # 【保持不变】文件上传到磁盘的物理路径
+  image-upload-dir: D:/lesson/nginx-1.18.0/html/tjufood/imgs/
+  # 【新增】图片通过Nginx或网关暴露给外界访问的URL前缀
+  image-access-url: http://localhost/imgs/

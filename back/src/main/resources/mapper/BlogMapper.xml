@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.tjucomments.tjufood.mapper.BlogMapper">
+
+    <select id="queryBlogWithAuthor" resultType="xyz.tjucomments.tjufood.dto.BlogDTO">
+        SELECT
+            b.*,
+            u.nickname AS authorName,
+            u.icon AS authorIcon
+        FROM
+            tb_blog b
+                LEFT JOIN
+            tb_user u ON b.user_id = u.id
+        WHERE
+            b.id = #{id}
+    </select>
+
+</mapper>

@@ -1,0 +1,22 @@
+/* 1. 隐藏原有的Logo文字 */
+.knife4j-logo .logo-txt {
+    display: none !important;
+}
+
+/* 2. 将我们的图片设置为Logo背景 */
+.knife4j-logo {
+    background-image: url('/images/logotju.png'); /* 引用我们放在static/images下的logo */
+    background-size: contain; /* 图片自适应大小 */
+    background-repeat: no-repeat; /* 不重复平铺 */
+    background-position: center; /* 居中显示 */
+    width: 150px; /* 根据你的logo调整宽度 */
+}
+
+/* 3. (可选) 修改主题的主色调，以蓝色为例 */
+:root {
+    --primary-color: #1890ff !important; /* 修改所有主要按钮和链接的颜色 */
+}
+
+.ant-menu-dark .ant-menu-inline.ant-menu, .ant-menu.ant-menu-dark .ant-menu-sub {
+    background: #001529 !important; /* 修改左侧菜单栏背景色 */
+}

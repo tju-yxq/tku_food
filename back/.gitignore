@@ -1,0 +1,19 @@
+# yxq/back/.gitignore
+
+# 构建产物
+target/
+*.jar
+*.war
+
+# 日志文件
+*.log
+logs/
+
+# IDE配置文件
+.idea/
+.vscode/
+*.iml
+*.iws
+
+# 系统文件
+.DS_Store

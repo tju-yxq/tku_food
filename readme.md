@@ -1,0 +1,1 @@
+这是一个前后台分离（用户界面和管理员界面分离）的前后端分离的项目，目前后端采用的技术栈是springboot3+redis+sql server+knife4j+mybatis-plus+aop+rabbitmq(这个后续加上)，前端的技术栈是vue2+element ui+axios+ESlint+vue router+vuex。

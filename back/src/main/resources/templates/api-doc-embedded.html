@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TjuFood API文档</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .header {
+            background: #1890ff;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+        .content {
+            padding: 20px;
+            text-align: center;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            margin: 10px;
+            background: #1890ff;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: #40a9ff;
+        }
+        .btn-success {
+            background: #52c41a;
+        }
+        .btn-success:hover {
+            background: #73d13d;
+        }
+        .info-box {
+            background: #f6f8fa;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        .api-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .api-link-card {
+            border: 1px solid #e1e4e8;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            transition: box-shadow 0.3s;
+        }
+        .api-link-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🍽️ TjuFood API文档</h1>
+        <p>天津大学美食点评平台 - 接口文档</p>
+    </div>
+    
+    <div class="content">
+        <div class="info-box">
+            <h3>📋 API文档访问说明</h3>
+            <p>由于浏览器安全策略限制，API文档无法在iframe中直接显示。请选择以下方式访问完整的API文档：</p>
+        </div>
+        
+        <div style="margin: 30px 0;">
+            <a href="/doc.html#/home" target="_blank" class="btn btn-success">
+                🚀 在新窗口中打开完整API文档
+            </a>
+            <a href="/v3/api-docs" target="_blank" class="btn">
+                📄 下载OpenAPI规范文件
+            </a>
+        </div>
+        
+        <div class="api-links">
+            <div class="api-link-card">
+                <h4>🔐 用户管理模块</h4>
+                <p>用户注册、登录、个人信息管理等接口</p>
+                <a href="/doc.html#/home/用户管理" target="_blank" class="btn">查看接口</a>
+            </div>
+            
+            <div class="api-link-card">
+                <h4>🏢 内容管理模块</h4>
+                <p>食堂、窗口、菜品信息管理接口</p>
+                <a href="/doc.html#/home/内容管理" target="_blank" class="btn">查看接口</a>
+            </div>
+            
+            <div class="api-link-card">
+                <h4>💬 社区管理模块</h4>
+                <p>博客、评论、互动功能接口</p>
+                <a href="/doc.html#/home/社区管理" target="_blank" class="btn">查看接口</a>
+            </div>
+            
+            <div class="api-link-card">
+                <h4>📊 运营管理模块</h4>
+                <p>轮播图、公告、数据统计接口</p>
+                <a href="/doc.html#/home/运营管理" target="_blank" class="btn">查看接口</a>
+            </div>
+            
+            <div class="api-link-card">
+                <h4>⚙️ 系统管理模块</h4>
+                <p>管理员、角色、权限管理接口</p>
+                <a href="/doc.html#/home/系统管理" target="_blank" class="btn">查看接口</a>
+            </div>
+            
+            <div class="api-link-card">
+                <h4>🛠️ 工具箱模块</h4>
+                <p>统计分析、任务管理、API文档接口</p>
+                <a href="/doc.html#/home/工具箱" target="_blank" class="btn">查看接口</a>
+            </div>
+        </div>
+        
+        <div class="info-box" style="margin-top: 40px;">
+            <h3>🔗 快速链接</h3>
+            <ul style="text-align: left;">
+                <li><strong>完整API文档：</strong> <a href="/doc.html#/home" target="_blank">http://127.0.0.1:8090/doc.html#/home</a></li>
+                <li><strong>OpenAPI规范：</strong> <a href="/v3/api-docs" target="_blank">http://127.0.0.1:8090/v3/api-docs</a></li>
+                <li><strong>健康检查：</strong> <a href="/actuator/health" target="_blank">http://127.0.0.1:8090/actuator/health</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        // 自动检测并打开API文档
+        function openApiDoc() {
+            window.open('/doc.html#/home', '_blank');
+        }
+        
+        // 页面加载完成后的提示
+        window.onload = function() {
+            console.log('TjuFood API文档页面加载完成');
+        };
+    </script>
+</body>
+</html>
