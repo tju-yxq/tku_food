@@ -13,6 +13,7 @@
 import { pathToRegexp } from 'path-to-regexp'
 
 export default {
+  name: 'Breadcrumb',
   data() {
     return {
       levelList: null
@@ -75,5 +76,40 @@ export default {
     color: #97a8be;
     cursor: text;
   }
+  
+  .el-breadcrumb__inner a {
+    color: #606266;
+    font-weight: normal;
+    transition: color 0.3s;
+    
+    &:hover {
+      color: #409EFF;
+    }
+  }
+  
+  .el-breadcrumb__separator {
+    margin: 0 9px;
+    color: #dcdfe6;
+  }
+}
+
+// 面包屑动画
+.breadcrumb-enter-active,
+.breadcrumb-leave-active {
+  transition: all .5s;
+}
+
+.breadcrumb-enter,
+.breadcrumb-leave-active {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.breadcrumb-move {
+  transition: all .5s;
+}
+
+.breadcrumb-leave-active {
+  position: absolute;
 }
 </style>

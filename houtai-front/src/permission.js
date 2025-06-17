@@ -3,67 +3,68 @@ import store from './store'
 import { Message } from 'element-ui'
 import NProgress from 'nprogress' // 进度条
 import 'nprogress/nprogress.css' // 进度条样式
-/* eslint-disable no-unused-vars */
+import { getToken } from '@/utils/auth' // 从cookie获取token
 
-
-NProgress.configure({ showSpinner: false }) // NProgress Configuration
+NProgress.configure({ showSpinner: false }) // NProgress配置
 
 const whiteList = ['/login'] // 无需重定向的白名单
 
 router.beforeEach(async(to, from, next) => {
-    NProgress.start()
+  // 开始进度条
+  NProgress.start()
 
-    const hasToken = store.getters.token
+  // 确定用户是否已登录
+  const hasToken = getToken()
 
-    if (hasToken) {
-        if (to.path === '/login') {
-            // 如果已登录，重定向到首页
-            next({ path: '/' })
-            NProgress.done()
-        } else {
-            // ★★★ 核心修正：判断当前用户是否已通过 getInfo 获取了他的角色信息 ★★★
-            const hasRoles = store.getters.roles && store.getters.roles.length > 0
-
-            if (hasRoles) {
-                // 如果Vuex中已有角色信息，说明动态路由已经生成，直接放行
-                next()
-            } else {
-                try {
-                    // 如果Vuex中没有角色信息，则调用getInfo获取
-                    const userInfo = await store.dispatch('user/getInfo')
-                    const roles = userInfo.roles // 从返回的用户信息中获取角色
-
-                    // 根据角色生成可访问的路由表
-                    const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
-
-                    // 动态添加可访问的路由
-                    router.addRoutes(accessRoutes)
-
-                    // hack方法 确保addRoutes已完成
-                    // set the replace: true, so the navigation will not leave a history record
-                    next({ ...to, replace: true })
-                } catch (error) {
-                    // 如果获取用户信息失败（例如token过期），则重置token并跳转到登录页
-                    await store.dispatch('user/resetToken')
-                    Message.error(error.message || '获取用户信息失败，请重新登录')
-                    next(`/login?redirect=${to.path}`)
-                    NProgress.done()
-                }
-            }
-        }
+  if (hasToken) {
+    if (to.path === '/login') {
+      // 如果已登录，重定向到首页
+      next({ path: '/' })
+      NProgress.done() // hack: https://github.com/PanJiaChen/vue-element-admin/pull/2939
     } else {
-        /* has no token*/
-        if (whiteList.indexOf(to.path) !== -1) {
-            // 在免登录白名单中，直接进入
-            next()
-        } else {
-            // 其他没有访问权限的页面将被重定向到登录页面
-            next(`/login?redirect=${to.path}`)
-            NProgress.done()
+      // 确定用户是否已通过getInfo获取了他的角色信息
+      const hasRoles = store.getters.roles && store.getters.roles.length > 0
+      
+      if (hasRoles) {
+        next()
+      } else {
+        try {
+          // 获取用户信息
+          // 注意: 角色必须是一个数组! 例如: ['admin'] 或 ['developer', 'editor']
+          const { roles } = await store.dispatch('user/getInfo')
+
+          // 基于角色生成可访问的路由
+          const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
+
+          // 动态添加可访问的路由
+          router.addRoutes(accessRoutes)
+
+          // hack方法 确保addRoutes已完成
+          // 设置replace: true，这样导航就不会留下历史记录
+          next({ ...to, replace: true })
+        } catch (error) {
+          // 移除token并转到登录页重新登录
+          await store.dispatch('user/resetToken')
+          Message.error(error || 'Has Error')
+          next(`/login?redirect=${to.path}`)
+          NProgress.done()
         }
+      }
     }
+  } else {
+    /* 没有token */
+    if (whiteList.indexOf(to.path) !== -1) {
+      // 在免登录白名单中，直接进入
+      next()
+    } else {
+      // 其他没有访问权限的页面将被重定向到登录页面
+      next(`/login?redirect=${to.path}`)
+      NProgress.done()
+    }
+  }
 })
 
 router.afterEach(() => {
-    NProgress.done()
+  // 完成进度条
+  NProgress.done()
 })

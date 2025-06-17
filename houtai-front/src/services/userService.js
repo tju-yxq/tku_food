@@ -4,6 +4,8 @@ import { setToken, removeToken, getToken } from '@/utils/auth';
 class UserService {
     /**
      * 用户登录业务
+     * @param {Object} loginData - 包含用户名和密码的登录数据
+     * @returns {Promise} - 返回登录结果的Promise
      */
     async login(loginData) {
         try {
@@ -26,6 +28,7 @@ class UserService {
 
     /**
      * 获取当前登录管理员的信息
+     * @returns {Promise} - 返回用户信息的Promise
      */
     async getUserInfo() {
         try {
@@ -40,6 +43,7 @@ class UserService {
 
     /**
      * 处理用户登出业务
+     * @returns {Promise} - 返回登出结果的Promise
      */
     async logout() {
         try {

@@ -20,11 +20,11 @@
         <div class="stats-section">
           <div class="stat-item">
             <div class="stat-title">待办事项</div>
-            <div class="stat-value">3 / 10</div>
+            <div class="stat-value">{{ pendingTasks }} / {{ totalTasks }}</div>
           </div>
           <div class="stat-item">
             <div class="stat-title">项目总数</div>
-            <div class="stat-value">8</div>
+            <div class="stat-value">{{ projectCount }}</div>
           </div>
         </div>
       </el-row>
@@ -32,65 +32,17 @@
 
     <!-- 数据概览 -->
     <el-row :gutter="20" style="margin-top: 20px;">
-      <el-col :span="6">
+      <el-col :span="6" v-for="(card, index) in dataCards" :key="index">
         <el-card shadow="hover" class="data-card">
           <div class="data-card-inner">
-            <div class="data-icon user-icon">
-              <i class="el-icon-user"></i>
+            <div class="data-icon" :class="card.iconClass">
+              <i :class="card.icon"></i>
             </div>
             <div class="data-info">
-              <div class="data-title">用户总数</div>
-              <div class="data-value">1,286</div>
+              <div class="data-title">{{ card.title }}</div>
+              <div class="data-value">{{ card.value }}</div>
               <div class="data-trend">
-                <span class="trend-up">↑ 12%</span> 较上周
-              </div>
-            </div>
-          </div>
-        </el-card>
-      </el-col>
-      <el-col :span="6">
-        <el-card shadow="hover" class="data-card">
-          <div class="data-card-inner">
-            <div class="data-icon blog-icon">
-              <i class="el-icon-document"></i>
-            </div>
-            <div class="data-info">
-              <div class="data-title">博客总数</div>
-              <div class="data-value">526</div>
-              <div class="data-trend">
-                <span class="trend-up">↑ 8%</span> 较上周
-              </div>
-            </div>
-          </div>
-        </el-card>
-      </el-col>
-      <el-col :span="6">
-        <el-card shadow="hover" class="data-card">
-          <div class="data-card-inner">
-            <div class="data-icon review-icon">
-              <i class="el-icon-chat-line-square"></i>
-            </div>
-            <div class="data-info">
-              <div class="data-title">评价总数</div>
-              <div class="data-value">3,128</div>
-              <div class="data-trend">
-                <span class="trend-up">↑ 15%</span> 较上周
-              </div>
-            </div>
-          </div>
-        </el-card>
-      </el-col>
-      <el-col :span="6">
-        <el-card shadow="hover" class="data-card">
-          <div class="data-card-inner">
-            <div class="data-icon dish-icon">
-              <i class="el-icon-dish"></i>
-            </div>
-            <div class="data-info">
-              <div class="data-title">菜品总数</div>
-              <div class="data-value">842</div>
-              <div class="data-trend">
-                <span class="trend-up">↑ 5%</span> 较上周
+                <span :class="card.trendClass">{{ card.trend }}</span> {{ card.trendText }}
               </div>
             </div>
           </div>
@@ -106,20 +58,13 @@
             <span class="card-header-title">快捷操作</span>
           </div>
           <div class="quick-access">
-            <el-button type="primary" plain @click="$router.push('/content-mgr/canteen')">
-              <i class="el-icon-office-building"></i> 食堂管理
-            </el-button>
-            <el-button type="success" plain @click="$router.push('/community-mgr/blog')">
-              <i class="el-icon-s-check"></i> 审核中心
-            </el-button>
-            <el-button type="warning" plain @click="$router.push('/operation-mgr/notice')">
-              <i class="el-icon-bell"></i> 发布公告
-            </el-button>
-            <el-button type="danger" plain @click="$router.push('/system-mgr/personnel')">
-              <i class="el-icon-user-solid"></i> 人员管理
-            </el-button>
-            <el-button type="info" plain @click="$router.push('/toolbox/statistics')">
-              <i class="el-icon-data-analysis"></i> 数据大屏
+            <el-button 
+              v-for="action in quickActions" 
+              :key="action.path"
+              :type="action.type" 
+              plain 
+              @click="$router.push(action.path)">
+              <i :class="action.icon"></i> {{ action.label }}
             </el-button>
           </div>
         </el-card>
@@ -183,6 +128,54 @@ export default {
   name: 'Dashboard',
   data() {
     return {
+      pendingTasks: 3,
+      totalTasks: 10,
+      projectCount: 8,
+      dataCards: [
+        {
+          title: '用户总数',
+          value: '1,286',
+          trend: '↑ 12%',
+          trendText: '较上周',
+          trendClass: 'trend-up',
+          icon: 'el-icon-user',
+          iconClass: 'user-icon'
+        },
+        {
+          title: '博客总数',
+          value: '526',
+          trend: '↑ 8%',
+          trendText: '较上周',
+          trendClass: 'trend-up',
+          icon: 'el-icon-document',
+          iconClass: 'blog-icon'
+        },
+        {
+          title: '评价总数',
+          value: '3,128',
+          trend: '↑ 15%',
+          trendText: '较上周',
+          trendClass: 'trend-up',
+          icon: 'el-icon-chat-line-square',
+          iconClass: 'review-icon'
+        },
+        {
+          title: '菜品总数',
+          value: '842',
+          trend: '↑ 5%',
+          trendText: '较上周',
+          trendClass: 'trend-up',
+          icon: 'el-icon-dish',
+          iconClass: 'dish-icon'
+        }
+      ],
+      quickActions: [
+        { label: '食堂管理', icon: 'el-icon-office-building', path: '/content-mgr/canteen', type: 'primary' },
+        { label: '审核中心', icon: 'el-icon-s-check', path: '/community-mgr/blog', type: 'success' },
+        { label: '发布公告', icon: 'el-icon-bell', path: '/operation-mgr/notice', type: 'warning' },
+        { label: '人员管理', icon: 'el-icon-user-solid', path: '/system-mgr/personnel', type: 'danger' },
+        { label: '数据大屏', icon: 'el-icon-data-analysis', path: '/toolbox/statistics', type: 'info' }
+      ],
       activities: [
         { content: '审核通过了用户 "TJU_Foodie" 的博客', timestamp: '2小时前', color: '#0bbd87' },
         { content: '更新了 "夏日特饮" 轮播图的上线时间', timestamp: '昨天', color: '' },
@@ -239,6 +232,7 @@ export default {
 .welcome-card {
   border-radius: 8px;
   margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   
   .welcome-section {
     h2 { 
@@ -278,10 +272,17 @@ export default {
 .data-card {
   border-radius: 8px;
   height: 120px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-5px);
+  }
   
   .data-card-inner {
     display: flex;
     height: 100%;
+    padding: 15px;
   }
   
   .data-icon {
@@ -350,6 +351,7 @@ export default {
 
 .quick-access-card, .activity-card, .todo-card {
   border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   
   .card-header-title {
     font-size: 16px;

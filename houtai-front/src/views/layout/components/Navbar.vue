@@ -113,6 +113,8 @@ export default {
           height: 40px;
           border-radius: 10px;
           margin-right: 8px;
+          object-fit: cover;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
         }
         
         .user-name {

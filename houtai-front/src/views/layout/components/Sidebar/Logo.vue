@@ -48,6 +48,7 @@ export default {
   text-align: center;
   overflow: hidden;
   box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
 
   & .sidebar-logo-link {
     height: 100%;
@@ -61,6 +62,7 @@ export default {
       height: 32px;
       vertical-align: middle;
       margin-right: 12px;
+      transition: all 0.3s;
     }
 
     & .sidebar-title {
@@ -71,6 +73,7 @@ export default {
       line-height: 50px;
       font-size: 16px;
       vertical-align: middle;
+      transition: all 0.3s;
     }
   }
 

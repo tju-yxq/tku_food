@@ -62,6 +62,7 @@ div:focus {
   border: none;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.05) !important;
   margin-bottom: 20px;
+  transition: all 0.3s ease;
   
   &:hover {
     box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.1) !important;
@@ -97,6 +98,7 @@ div:focus {
 // 按钮样式增强
 .el-button {
   border-radius: 4px;
+  transition: all 0.3s ease;
   
   &--primary {
     background-color: #409EFF;
@@ -146,6 +148,12 @@ div:focus {
 
 .el-input__inner {
   border-radius: 4px;
+  transition: all 0.3s ease;
+  
+  &:focus {
+    border-color: #409EFF;
+    box-shadow: 0 0 0 2px rgba(64, 158, 255, 0.2);
+  }
 }
 
 // 分页样式增强
@@ -182,4 +190,30 @@ div:focus {
     padding: 15px 20px;
     border-top: 1px solid #ebeef5;
   }
+}
+
+// 加载动画样式增强
+.el-loading-mask {
+  background-color: rgba(255, 255, 255, 0.8);
+  
+  .el-loading-spinner {
+    .path {
+      stroke: #409EFF;
+    }
+  }
+}
+
+// 滚动条样式美化
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c0c4cc;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f5f7fa;
 }

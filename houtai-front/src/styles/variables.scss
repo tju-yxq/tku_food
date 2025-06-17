@@ -34,6 +34,14 @@ $borderExtraLight: #F2F6FC;
 $backgroundBase: #F5F7FA;
 $backgroundWhite: #FFFFFF;
 
+// 阴影
+$boxShadowBase: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+$boxShadowLight: 0 2px 12px 0 rgba(0, 0, 0, .1);
+$boxShadowHover: 0 4px 16px 0 rgba(0, 0, 0, .1);
+
+// 过渡
+$transitionBase: all .3s cubic-bezier(.645, .045, .355, 1);
+
 :export {
   menuText: $menuText;
   menuActiveText: $menuActiveText;
