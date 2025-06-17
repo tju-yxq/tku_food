@@ -16,6 +16,7 @@ module.exports = defineConfig({
 
   // 开发服务器配置
   devServer: {
+    port: 9080, // 设置前端开发服务器端口为9080
     proxy: {
       // 代理所有以 /api 开头的请求
       '/api': {
