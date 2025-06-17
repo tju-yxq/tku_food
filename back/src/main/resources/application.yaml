@@ -36,14 +36,27 @@ spring:
     redis:
       # 数据库索引，默认为0
       database: 0
-      # 连接到虚拟机中的Redis
-      host: 192.168.92.128
+      # 连接到本地Redis (修改为localhost以避免网络连接问题)
+      host: localhost
       # Redis默认端口
       port: 6379
       # Redis服务本身没有设置密码，此行已注释。
       # password:
-      # 连接超时时间
-      timeout: 5000ms
+      # 连接超时时间 (增加超时时间)
+      timeout: 10000ms
+      # 连接池配置
+      lettuce:
+        pool:
+          # 连接池最大连接数
+          max-active: 8
+          # 连接池最大阻塞等待时间
+          max-wait: -1ms
+          # 连接池中的最大空闲连接
+          max-idle: 8
+          # 连接池中的最小空闲连接
+          min-idle: 0
+        # 关闭超时时间
+        shutdown-timeout: 100ms
 
 # MyBatis 配置
 mybatis:
@@ -73,7 +86,7 @@ knife4j:
   locale: zh_CN
   # 个性化设置
   setting:
-    # 开启顶栏的“文档管理”功能
+    # 开启顶栏的"文档管理"功能
     enableDocumentManage: true
     # 开启接口过滤
     enableSwaggerModels: true
