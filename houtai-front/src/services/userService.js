@@ -9,7 +9,15 @@ class UserService {
         try {
             // 调用API
             const response = await userApi.login(loginData);
-            return response;
+            
+            // 后端成功时返回 AdminInfoVO 对象，包含token
+            if (response && response.token) {
+                setToken(response.token);
+                // 返回整个用户信息对象，以便存入store
+                return Promise.resolve(response);
+            } else {
+                return Promise.reject(new Error('登录失败，未收到Token'));
+            }
         } catch (error) {
             console.error('登录失败:', error);
             return Promise.reject(error);
