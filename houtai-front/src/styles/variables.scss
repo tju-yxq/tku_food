@@ -1,14 +1,38 @@
-$menuText:#bfcbd9;
-$menuActiveText:#409EFF;
-$subMenuActiveText:#f4f4f5;
+// 侧边栏
+$menuText: #bfcbd9;
+$menuActiveText: #409EFF;
+$subMenuActiveText: #f4f4f5;
 
-$menuBg:#304156;
-$menuHover:#263445;
+$menuBg: #304156;
+$menuHover: #263445;
 
-$subMenuBg:#1f2d3d;
-$subMenuHover:#001528;
+$subMenuBg: #1f2d3d;
+$subMenuHover: #001528;
 
 $sideBarWidth: 210px;
+
+// 主题色
+$primaryColor: #409EFF;
+$successColor: #67C23A;
+$warningColor: #E6A23C;
+$dangerColor: #F56C6C;
+$infoColor: #909399;
+
+// 文字颜色
+$textPrimary: #303133;
+$textRegular: #606266;
+$textSecondary: #909399;
+$textPlaceholder: #C0C4CC;
+
+// 边框颜色
+$borderBase: #DCDFE6;
+$borderLight: #E4E7ED;
+$borderLighter: #EBEEF5;
+$borderExtraLight: #F2F6FC;
+
+// 背景颜色
+$backgroundBase: #F5F7FA;
+$backgroundWhite: #FFFFFF;
 
 :export {
   menuText: $menuText;

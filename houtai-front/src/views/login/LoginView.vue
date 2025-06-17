@@ -94,7 +94,9 @@ export default {
                 this.$router.push({ path: this.redirect || '/' });
                 this.loading = false;
               })
-              .catch(() => {
+              .catch((error) => {
+                console.error('登录失败:', error);
+                this.$message.error('登录失败: ' + (error.message || '请检查账号和密码'));
                 this.loading = false;
               });
         }
@@ -105,7 +107,6 @@ export default {
 </script>
 
 <style scoped>
-/* 样式与之前类似，但移除了不再需要的组件引用 */
 .login-container {
   display: flex;
   width: 100%;
@@ -127,13 +128,45 @@ export default {
   color: white;
 }
 
-.login-left-logo { display: flex; align-items: center; }
-.login-left-logo img { width: 48px; height: 48px; margin-right: 10px; }
-.login-left-logo span { font-size: 20px; font-weight: bold; }
-.login-left-content { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-.welcome-img { width: 350px; margin-bottom: 20px; }
-.welcome-title { font-size: 32px; font-weight: bold; }
-.welcome-message { margin-top: 10px; font-size: 14px; }
+.login-left-logo { 
+  display: flex; 
+  align-items: center; 
+}
+
+.login-left-logo img { 
+  width: 48px; 
+  height: 48px; 
+  margin-right: 10px; 
+}
+
+.login-left-logo span { 
+  font-size: 20px; 
+  font-weight: bold; 
+}
+
+.login-left-content { 
+  flex: 1; 
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center; 
+  text-align: center; 
+}
+
+.welcome-img { 
+  width: 350px; 
+  margin-bottom: 20px; 
+}
+
+.welcome-title { 
+  font-size: 32px; 
+  font-weight: bold; 
+}
+
+.welcome-message { 
+  margin-top: 10px; 
+  font-size: 14px; 
+}
 
 .login-right {
   flex: 1;
@@ -142,7 +175,58 @@ export default {
   align-items: center;
   background-color: #fff;
 }
-.login-form-wrapper { width: 350px; }
-.form-title { font-size: 24px; font-weight: bold; text-align: center; margin-bottom: 24px; }
-</style>
 
+.login-form-wrapper { 
+  width: 350px; 
+}
+
+.form-title { 
+  font-size: 24px; 
+  font-weight: bold; 
+  text-align: center; 
+  margin-bottom: 24px; 
+  color: #304156;
+}
+
+.login-form-body .el-input__inner {
+  height: 50px;
+  border-radius: 4px;
+}
+
+.login-form-body .el-button {
+  height: 50px;
+  font-size: 16px;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .login-container {
+    flex-direction: column;
+  }
+  
+  .login-left, .login-right {
+    flex: none;
+    width: 100%;
+  }
+  
+  .login-left {
+    height: 30vh;
+    padding: 20px;
+  }
+  
+  .welcome-img {
+    width: 200px;
+  }
+  
+  .login-right {
+    height: 70vh;
+  }
+  
+  .login-form-wrapper {
+    width: 90%;
+    max-width: 350px;
+  }
+}
+</style>

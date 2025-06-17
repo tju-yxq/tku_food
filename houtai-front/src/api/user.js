@@ -1,8 +1,7 @@
-// 文件路径: yxq/houtai-front/src/api/user.js (修改)
 import request from '@/utils/request'
 
 export function login(data) {
-    // 修正URL路径
+    // 修正URL路径，确保与后端接口一致
     return request({
         url: '/admin/login',
         method: 'post',
@@ -11,7 +10,7 @@ export function login(data) {
 }
 
 export function getInfo() {
-    // 修正URL路径，指向新增的 /api/admin/me 接口
+    // 修正URL路径，指向正确的管理员信息接口
     return request({
         url: '/admin/me',
         method: 'get'

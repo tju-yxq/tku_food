@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       title: 'TjuFood Admin',
-      logo: require('@/assets/imgs/logo.png') // 确保您的logo路径正确
+      logo: require('@/assets/imgs/logo.png')
     }
   }
 }
@@ -42,15 +42,19 @@ export default {
 .sidebar-logo-container {
   position: relative;
   width: 100%;
-  height: 50px;
-  line-height: 50px;
+  height: 64px;
+  line-height: 64px;
   background: #2b2f3a;
   text-align: center;
   overflow: hidden;
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.1);
 
   & .sidebar-logo-link {
     height: 100%;
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     & .sidebar-logo {
       width: 32px;
@@ -65,14 +69,17 @@ export default {
       color: #fff;
       font-weight: 600;
       line-height: 50px;
-      font-size: 14px;
+      font-size: 16px;
       vertical-align: middle;
     }
   }
 
   &.collapse {
     .sidebar-logo {
-      margin-right: 0px;
+      margin-right: 0;
+    }
+    .sidebar-title {
+      display: none;
     }
   }
 }

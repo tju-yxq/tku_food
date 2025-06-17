@@ -10,12 +10,11 @@ const service = axios.create({
 })
 
 // === 请求拦截器 ===
-// 在这里，我们会为每一个发出去的请求都附上 Token
 service.interceptors.request.use(
     config => {
         if (store.getters.token) {
-            // 让每个请求都携带 'Authorization' 请求头，这是后端验证身份的凭据
-            config.headers['Authorization'] = 'Bearer ' + getToken()
+            // 让每个请求都携带 'Authorization' 请求头
+            config.headers['Authorization'] = getToken()
         }
         return config
     },
@@ -26,7 +25,6 @@ service.interceptors.request.use(
 )
 
 // === 响应拦截器 ===
-// 在这里，我们会统一处理后端的响应，判断是成功还是失败
 service.interceptors.response.use(
     response => {
         const res = response.data
@@ -37,7 +35,7 @@ service.interceptors.response.use(
             return res.data
         } else {
             // 【业务失败处理】
-            // 如果 success 字段为 false，说明是业务逻辑上的错误（例如“用户名已存在”）
+            // 如果 success 字段为 false，说明是业务逻辑上的错误
             Message({
                 message: res.errorMsg || 'Error',
                 type: 'error',
@@ -48,10 +46,18 @@ service.interceptors.response.use(
     },
     error => {
         // 【网络/HTTP错误处理】
-        // 这个代码块会处理所有非 2xx 的HTTP状态码，比如我们现在遇到的 401 (未授权) 或 500 (服务器内部错误)
         console.log('err' + error) // for debug
+        
+        // 处理401未授权错误
+        if (error.response && error.response.status === 401) {
+            // 清除token并重定向到登录页
+            store.dispatch('user/resetToken').then(() => {
+                location.reload()
+            })
+        }
+        
         Message({
-            message: error.message,
+            message: error.message || '请求失败，请稍后再试',
             type: 'error',
             duration: 5 * 1000
         })

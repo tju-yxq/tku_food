@@ -16,12 +16,12 @@ const mutations = {
     SET_ROLES: (state, roles) => { state.roles = roles; },
     RESET_STATE: (state) => {
         Object.assign(state, {
-            token: getToken() || '', // 退出后也可能需要保留token，这里以清空为例
+            token: '',
             name: '',
             avatar: 'https://i.imgur.com/kYoN8mC.png',
             roles: []
         });
-        removeToken(); // 确保Cookie也被清除
+        removeToken();
     }
 };
 
@@ -30,17 +30,21 @@ const actions = {
     login({ commit }, loginData) {
         return new Promise((resolve, reject) => {
             userService.login(loginData).then(response => {
-                // ★★★ 核心修正 #1: 确认 response 就是后端返回的 data 部分 (AdminInfoVO) ★★★
-                const userInfo = response;
-                if (!userInfo || !userInfo.token) {
+                // 确保response是后端返回的AdminInfoVO对象
+                if (!response || !response.token) {
                     return reject('登录失败，未能获取到Token。');
                 }
 
-                commit('SET_TOKEN', userInfo.token);
-                commit('SET_NAME', userInfo.name || userInfo.username);
-                commit('SET_AVATAR', userInfo.avatar || state.avatar);
-                commit('SET_ROLES', userInfo.roles || []);
-                setToken(userInfo.token);
+                commit('SET_TOKEN', response.token);
+                commit('SET_NAME', response.name || response.username);
+                commit('SET_AVATAR', response.avatar || state.avatar);
+                
+                // 如果后端直接返回了角色信息，则立即设置
+                if (response.roles && response.roles.length > 0) {
+                    commit('SET_ROLES', response.roles);
+                }
+                
+                setToken(response.token);
                 resolve();
             }).catch(error => {
                 reject(error);
@@ -53,26 +57,29 @@ const actions = {
         return new Promise((resolve, reject) => {
             // 确保我们有token再发请求
             if (!state.token) {
-                return reject('getInfo: a token is required');
+                return reject('getInfo: token is required');
             }
 
             userService.getUserInfo().then(response => {
-                // ★★★ 核心修正 #2: 确认 response 就是后端 /me 接口返回的 data ★★★
-                const userInfo = response;
-
-                if (!userInfo || !userInfo.roles || userInfo.roles.length <= 0) {
+                // 确保response是后端/me接口返回的数据
+                if (!response) {
                     reject('验证失败，请重新登录。');
+                    return;
                 }
 
-                const { roles, name, username, avatar } = userInfo;
+                const { roles, name, username, avatar } = response;
 
-                // 使用 mutations 更新 state
+                // 验证返回的roles是否是非空数组
+                if (!roles || roles.length <= 0) {
+                    reject('getInfo: roles must be a non-null array!');
+                    return;
+                }
+
                 commit('SET_ROLES', roles);
                 commit('SET_NAME', name || username);
                 commit('SET_AVATAR', avatar || state.avatar);
 
-                // ★★★ 核心修正 #3: resolve 的数据结构要和 permission.js 期望的一致 ★★★
-                resolve(userInfo); // 直接将包含roles的用户信息对象传递出去
+                resolve(response);
             }).catch(error => {
                 reject(error);
             });
@@ -80,9 +87,9 @@ const actions = {
     },
 
     // user logout
-    logout({ commit }) {
+    logout({ commit, state }) {
         return new Promise((resolve, reject) => {
-            userService.logout().then(() => {
+            userService.logout(state.token).then(() => {
                 commit('RESET_STATE');
                 resetRouter();
                 resolve();
